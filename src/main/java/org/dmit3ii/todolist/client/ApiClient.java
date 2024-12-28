@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @Service
 public class ApiClient {
     @Value("${url.api.path}")
@@ -18,7 +20,7 @@ public class ApiClient {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping
-    public ResponseEntity<Holiday> getAllHolidays(int year, String countryCode) {
+    public ResponseEntity<List<Holiday>> getAllHolidays(int year, String countryCode) {
         return restTemplate.exchange(apiUrl + "/{year}/{countryCode}", HttpMethod.GET, null,
                 new ParameterizedTypeReference<>() {}, year, countryCode);
     }
