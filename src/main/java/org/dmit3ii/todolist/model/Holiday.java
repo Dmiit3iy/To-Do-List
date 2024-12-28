@@ -1,10 +1,20 @@
 package org.dmit3ii.todolist.model;
 
-import java.lang.reflect.Type;
+import jakarta.persistence.*;
+import lombok.Data;
 
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Data
 public class Holiday {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    private String date;
+    private LocalDate date;
 
     private String localName;
 
@@ -16,9 +26,13 @@ public class Holiday {
 
     private Boolean global;
 
-    private Object counties;
+    private String counties;
 
     private Integer launchYear;
 
-    private List<TypeOfHoliday> types;
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinTable(name = "holidays_types",
+    joinColumns = @JoinColumn(name = "holiday_id"),
+    inverseJoinColumns = @JoinColumn(name = "holiday_type_id"))
+    private Set<HolidayType> types = new HashSet<>();
 }
