@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,9 +32,9 @@ public class Holiday {
 
     private Integer launchYear;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinTable(name = "holidays_types",
-    joinColumns = @JoinColumn(name = "holiday_id"),
-    inverseJoinColumns = @JoinColumn(name = "holiday_type_id"))
-    private Set<HolidayType> types = new HashSet<>();
+    @ElementCollection(targetClass = TypeOfHoliday.class)
+    @CollectionTable(name = "holiday_types", joinColumns = @JoinColumn(name = "holiday_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private List<TypeOfHoliday> types = new ArrayList<>();
 }
