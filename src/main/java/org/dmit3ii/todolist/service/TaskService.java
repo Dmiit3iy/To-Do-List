@@ -11,9 +11,9 @@ public interface TaskService {
     void addTask(TaskDTO taskDTO);
     Task getById(long id);
 
-    Page<TaskDTO> getAllTasks(Pageable pageable);
+    Page<Task> getAllTasks(Pageable pageable);
 
-    TaskDTO deleteTasById(long id);
+    Task deleteTasById(long id);
 
-    TaskDTO updateTask(TaskDTO taskDTO);
+    Task updateTask(Task task);
 }

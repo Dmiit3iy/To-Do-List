@@ -29,19 +29,23 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Page<TaskDTO> getAllTasks(Pageable pageable) {
-        return taskRepository.findAll(pageable).map(taskMapper::taskToTaskDTO);
+    public Page<Task> getAllTasks(Pageable pageable) {
+        return taskRepository.findAll(pageable);
     }
 
     @Override
-    public TaskDTO deleteTasById(long id) {
+    public Task deleteTasById(long id) {
         Task task = getById(id);
         taskRepository.deleteById(task.getId());
-        return taskMapper.taskToTaskDTO(task);
+        return task;
     }
 
     @Override
-    public TaskDTO updateTask(TaskDTO taskDTO) {
-        return null;
+    public Task updateTask(Task task) {
+        Task baseTask = getById(task.getId());
+        baseTask.setTitle(task.getTitle());
+        baseTask.setDescription(task.getDescription());
+        baseTask.setDeadline(task.getDeadline());
+        return taskRepository.save(baseTask);
     }
 }
