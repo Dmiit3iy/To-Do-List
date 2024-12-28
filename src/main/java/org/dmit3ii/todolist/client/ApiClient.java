@@ -3,6 +3,7 @@ package org.dmit3ii.todolist.client;
 
 import org.dmit3ii.todolist.model.Holiday;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class ApiClient {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping
+    @Cacheable(value = "holidaysCache", key = "#year"+"-"+"#countryCode")
     public ResponseEntity<List<Holiday>> getAllHolidays(int year, String countryCode) {
         return restTemplate.exchange(apiUrl + "/{year}/{countryCode}", HttpMethod.GET, null,
                 new ParameterizedTypeReference<>() {}, year, countryCode);

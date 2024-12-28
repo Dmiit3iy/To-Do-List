@@ -4,14 +4,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
-@AllArgsConstructor
+@Data
+@RequiredArgsConstructor
 @NoArgsConstructor
 public class Task {
     @Id
@@ -23,5 +25,6 @@ public class Task {
     private String description;
     private LocalDate creationDate = LocalDate.now();
     private boolean completed = false;
+    @NonNull
     private LocalDate deadline;
 }
