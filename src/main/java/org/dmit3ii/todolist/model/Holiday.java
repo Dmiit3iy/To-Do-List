@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Entity
+//@Entity
 @Data
 public class Holiday {
     @Id
@@ -31,9 +31,9 @@ public class Holiday {
 
     private Integer launchYear;
 
-    @ElementCollection(targetClass = TypeOfHoliday.class)
-    @CollectionTable(name = "holiday_types", joinColumns = @JoinColumn(name = "holiday_id"))
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type")
+//    @ElementCollection(targetClass = TypeOfHoliday.class)
+//    @CollectionTable(name = "holiday_types", joinColumns = @JoinColumn(name = "holiday_id"))
+//    @Enumerated(EnumType.STRING)
+//    @Column(name = "type")
     private List<TypeOfHoliday> types = new ArrayList<>();
 }
