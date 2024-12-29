@@ -5,10 +5,10 @@ import org.dmit3ii.todolist.model.TaskDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 
 public interface TaskService {
     Task addTask(TaskDTO taskDTO);
+
     Task getById(long id);
 
     Page<Task> getAllTasks(Pageable pageable);
