@@ -28,11 +28,11 @@ class ValidationServiceTest {
 
     @Test
     void getNextAvailableDate() {
-        LocalDate date = LocalDate.of(2025, 3, 8); // Суббота
+        LocalDate date = LocalDate.of(2025, 3, 8);
         String countryCode = "RU";
-        LocalDate expectedNextAvailableDate = LocalDate.of(2025, 3, 10); // Понедельник
+        LocalDate expectedNextAvailableDate = LocalDate.of(2025, 3, 10);
         Holiday holiday = new Holiday();
-        holiday.setDate(LocalDate.of(2025, 3, 8)); // Праздник 8 марта
+        holiday.setDate(LocalDate.of(2025, 3, 8));
         holiday.setCountryCode("RU");
 
         when(apiClient.getAllHolidays(2025, countryCode)).thenReturn(List.of(holiday));
