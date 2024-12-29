@@ -1,6 +1,7 @@
 package org.dmit3ii.todolist.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.dmit3ii.todolist.model.Task;
 import org.dmit3ii.todolist.model.TaskDTO;
 import org.dmit3ii.todolist.model.TaskMapper;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/tasks")
 @AllArgsConstructor
@@ -26,6 +28,7 @@ public class TaskController {
     public ResponseEntity<Task> createTask(@RequestBody TaskDTO taskDTO, @RequestParam(defaultValue = "RU") String countryCode) {
         validationService.validateDay(taskDTO.getDeadline(), countryCode);
         Task task = taskService.addTask(taskDTO);
+        log.info("Task created: {}", task);
         return new ResponseEntity<>(task, HttpStatus.CREATED);
     }
 
@@ -43,12 +46,16 @@ public class TaskController {
 
     @PutMapping
     public ResponseEntity<Task> updateTask(@RequestBody Task task) {
-        return new ResponseEntity<>(taskService.updateTask(task), HttpStatus.OK);
+        Task updatedTask = taskService.updateTask(task);
+        log.info("Task updated: {}", updatedTask);
+        return new ResponseEntity<>(updatedTask, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Task> deleteTask(@PathVariable Long id) {
-        return new ResponseEntity<>(taskService.deleteTasById(id), HttpStatus.OK);
+        Task  deletedTask = taskService.deleteTasById(id);
+        log.info("Task deleted: {}", deletedTask);
+        return new ResponseEntity<>(deletedTask, HttpStatus.OK);
     }
 
 }
