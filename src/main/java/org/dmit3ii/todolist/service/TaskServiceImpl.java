@@ -19,8 +19,8 @@ public class TaskServiceImpl implements TaskService {
     private TaskMapper taskMapper;
 
     @Override
-    public void addTask(TaskDTO taskDTO) {
-        taskRepository.save(taskMapper.taskDTOToTask(taskDTO));
+    public Task addTask(TaskDTO taskDTO) {
+        return taskRepository.save(taskMapper.taskDTOToTask(taskDTO));
     }
 
     @Override
