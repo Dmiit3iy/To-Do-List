@@ -27,7 +27,6 @@ public final class ValidationService {
     }
 
     public LocalDate getNextAvailableDate(LocalDate date, String countryCode) {
-        // Получаем следующий доступный день
         LocalDate nextDate = date.plusDays(1);
         while (isWeekendOrHoliday(nextDate, countryCode)) {
             nextDate = nextDate.plusDays(1);
