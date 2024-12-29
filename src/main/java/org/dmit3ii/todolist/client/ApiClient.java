@@ -22,8 +22,12 @@ public class ApiClient {
 
     @GetMapping
     @Cacheable(value = "holidaysCache", key = "#year"+"-"+"#countryCode")
-    public ResponseEntity<List<Holiday>> getAllHolidays(int year, String countryCode) {
-        return restTemplate.exchange(apiUrl + "/{year}/{countryCode}", HttpMethod.GET, null,
+    public List<Holiday> getAllHolidays(int year, String countryCode) {
+        ResponseEntity<List<Holiday>> response =restTemplate.exchange(apiUrl + "/{year}/{countryCode}", HttpMethod.GET, null,
                 new ParameterizedTypeReference<>() {}, year, countryCode);
+        if (response == null || response.getBody() == null) {
+            throw new IllegalStateException("Ошибка получения списка праздников с внешнего API");
+        }
+        return response.getBody();
     }
 }

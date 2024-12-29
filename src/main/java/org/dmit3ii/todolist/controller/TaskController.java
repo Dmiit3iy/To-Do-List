@@ -5,6 +5,7 @@ import org.dmit3ii.todolist.model.Task;
 import org.dmit3ii.todolist.model.TaskDTO;
 import org.dmit3ii.todolist.model.TaskMapper;
 import org.dmit3ii.todolist.service.TaskService;
+import org.dmit3ii.todolist.service.ValidationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,10 +19,12 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class TaskController {
     TaskService taskService;
+    ValidationService validationService;
     private final TaskMapper taskMapper;
 
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody TaskDTO taskDTO) {
+    public ResponseEntity<Task> createTask(@RequestBody TaskDTO taskDTO, @RequestParam(defaultValue = "RU") String countryCode) {
+        validationService.validateDay(taskDTO.getDeadline(), countryCode);
         Task task = taskService.addTask(taskDTO);
         return new ResponseEntity<>(task, HttpStatus.CREATED);
     }
